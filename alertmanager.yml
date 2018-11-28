@@ -1,0 +1,106 @@
+global:
+##alertmanager.url: "http://localhost:9093"
+receivers:
+- name: slack_webhook
+  slack_configs:
+  - send_resolved: true
+    api_url: 'https://hooks.slack.com/services/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'
+    channel: '#autonomics'
+    #text: 'Here it is'
+    username: '{{ template "slack.default.username" . }}'
+    color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+    title: '{{ template "slack.default.title" . }}'
+    title_link: '{{ template "slack.default.titlelink" . }}'
+    pretext: '{{ template "slack.default.pretext" . }}'
+    text: '{{ template "slack.default.text" . }}'
+    fallback: '{{ template "slack.default.fallback" . }}'
+    icon_emoji: '{{ template "slack.default.iconemoji" . }}'
+    icon_url: '{{ template "slack.default.iconurl" . }}' ##'https://avatars3.githubusercontent.com/u/3380462'
+- name: webhook
+  webhook_configs:
+  - send_resolved: true
+    ##url: 'https://webhook.site/c95b06cc-37be-41b6-82b3-edeacb3a0830' 
+    url: http://bob.requestcatcher.com/test
+route:
+  receiver: 'webhook'
+  group_wait: 5s
+  group_interval: 10s
+  repeat_interval: 60s
+
+
+
+
+# global:
+# ##alertmanager.url: "http://localhost:9093"
+# receivers:
+# - name: slack_webhook
+#   slack_configs:
+#   - send_resolved: true
+#     api_url: 'https://hooks.slack.com/services/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'
+#     channel: '#autonomics'
+#     #text: 'Here it is'
+#     username: '{{ template "slack.default.username" . }}'
+#     color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+#     title: '{{ template "slack.default.title" . }}'
+#     title_link: '{{ template "slack.default.titlelink" . }}'
+#     pretext: '{{ template "slack.default.pretext" . }}'
+#     text: '{{ template "slack.default.text" . }}'
+#     fallback: '{{ template "slack.default.fallback" . }}'
+#     icon_emoji: '{{ template "slack.default.iconemoji" . }}'
+#     icon_url: '{{ template "slack.default.iconurl" . }}' ##'https://avatars3.githubusercontent.com/u/3380462'
+# - name: hooky
+#   webhook_configs:
+#   - send_resolved: true
+#     ##url: 'https://webhook.site/c95b06cc-37be-41b6-82b3-edeacb3a0830' 
+#     url: http://bob.requestcatcher.com/test
+# route:
+#   receiver: 'slack_webhook'
+#   group_by:
+#   - alertname
+#   routes:
+#     - receiver: hooky
+#       match:
+#         severity: Highest
+#       continue: true
+#     - receiver: slack_webhook
+#       match:
+#         severity: Highest
+#       continue: true
+#   group_wait: 5s
+#   group_interval: 10s
+#   repeat_interval: 60s
+
+
+
+# route:
+#   receiver: 'hooky'
+#   group_wait: 5s
+#   group_interval: 10s
+#   repeat_interval: 60s
+  # ResolveTimeout is the time after which an alert is declared resolved
+  # if it has not been updated.
+  # [ resolve_timeout: <duration> | default = 30s ]
+  # #[ slack_api_url: "https://hooks.slack.com/services/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" ]
+  # slack_api_url: 'https://hooks.slack.com/services/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'
+  # slack_configs:
+  #   channel: "autonomics"
+  #   icon_url: https://avatars3.githubusercontent.com/u/3380462
+  # [ icon_url: <tmpl_string> ]
+  # # The default HTTP client configuration
+  # #[ http_config: <http_config> ]
+  # [ send_resolved: <boolean> | default = true ]  
+  # url: "https://webhook.site/c95b06cc-37be-41b6-82b3-edeacb3a0830"
+  # # The HTTP client's configuration.
+  # #[ http_config: <http_config> | default = global.http_config ]
+  # global:
+  #   slack_api_url: 'https://hooks.slack.com/services/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'
+
+  #   route:
+  #     receiver: 'slack-notifications'
+  #     group_by: [alertname, datacenter, app]
+
+  #   receivers:
+  #   - name: 'slack-notifications'
+  #     slack_configs:
+  #     - channel: '#autonomics'
+  #       text: 'https://internal.myorg.net/wiki/alerts/{{ .GroupLabels.app }}/{{ .GroupLabels.alertname }}'

@@ -1,0 +1,9 @@
+datasources:
+- name: 'Prometheus'                         # name of the datasource
+  type: 'prometheus'                    # type of the data source
+  access: 'direct'                       # make grafana perform the requests
+  orgId: 1   # id of the organization to tie this datasource to
+  url: 'http://localhost:9090'         # url of the prom instance
+  editable: true                        # whether it should be editable
+  isDefault:                       # whether this should be the default DS
+  version: 1                            # well, versioning
